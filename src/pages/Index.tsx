@@ -1,16 +1,101 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { LayoutGrid, Users, Clock, Warehouse, Video, Upload } from "lucide-react";
+import KPIWidget from "@/components/KPIWidget";
+import ImagePreview from "@/components/ImagePreview";
+import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const KPI_DATA = [
+  {
+    title: "Available Space",
+    value: "34.2",
+    unit: "%",
+    icon: LayoutGrid,
+    color: "success" as const,
+    trend: { value: "5.1%", positive: true },
+  },
+  {
+    title: "Occupied Space",
+    value: "65.8",
+    unit: "%",
+    icon: Warehouse,
+    color: "warning" as const,
+    trend: { value: "2.3%", positive: false },
+  },
+  {
+    title: "People in Aisle",
+    value: "12",
+    unit: "persons",
+    icon: Users,
+    color: "info" as const,
+    trend: { value: "3", positive: false },
+  },
+  {
+    title: "Avg. Refill Time",
+    value: "47",
+    unit: "min",
+    icon: Clock,
+    color: "primary" as const,
+    trend: { value: "8 min", positive: true },
+  },
+];
+
+const Index = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen flex flex-col">
+      {/* Header */}
+      <header className="border-b border-border bg-card">
+        <div className="container mx-auto flex items-center justify-between h-16 px-4 md:px-6">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center">
+              <Warehouse className="h-5 w-5 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-base font-display font-bold text-foreground leading-tight">
+                SpaceIQ
+              </h1>
+              <p className="text-[11px] text-muted-foreground leading-tight">
+                AI-Powered Warehouse Intelligence
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+              <Upload className="h-4 w-4 mr-1.5" /> Upload Image
+            </Button>
+            <Button size="sm" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              <Video className="h-4 w-4 mr-1.5" /> Start Feed Preview
+            </Button>
+          </div>
+          <input ref={fileInputRef} type="file" accept="image/*" className="hidden" />
+        </div>
+      </header>
+
+      {/* Main */}
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-6 space-y-6">
+        {/* KPI Row */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {KPI_DATA.map((kpi) => (
+            <KPIWidget key={kpi.title} {...kpi} />
+          ))}
+        </section>
+
+        {/* Image Preview */}
+        <section className="kpi-card">
+          <ImagePreview />
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-card py-4">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+          <span>© 2026 SpaceIQ — AI Warehouse Solutions. All rights reserved.</span>
+          <span>Compliant with KSA Data Protection Standards</span>
+        </div>
+      </footer>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
