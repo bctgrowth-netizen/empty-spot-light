@@ -1,7 +1,11 @@
 import { LayoutGrid, Users, Clock, Warehouse, Video, Upload } from "lucide-react";
 import KPIWidget from "@/components/KPIWidget";
 import ImagePreview from "@/components/ImagePreview";
+import AnalyticsTab from "@/components/AnalyticsTab";
+import FloorPlanTab from "@/components/FloorPlanTab";
+import AIChatbot from "@/components/AIChatbot";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRef } from "react";
 
 const KPI_DATA = [
@@ -73,18 +77,35 @@ const Index = () => {
       </header>
 
       {/* Main */}
-      <main className="flex-1 container mx-auto px-4 md:px-6 py-6 space-y-6">
-        {/* KPI Row */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {KPI_DATA.map((kpi) => (
-            <KPIWidget key={kpi.title} {...kpi} />
-          ))}
-        </section>
+      <main className="flex-1 container mx-auto px-4 md:px-6 py-6">
+        <Tabs defaultValue="dashboard" className="space-y-6">
+          <TabsList className="grid w-full max-w-md grid-cols-3">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="floorplan">Floor Plan</TabsTrigger>
+          </TabsList>
 
-        {/* Image Preview */}
-        <section className="kpi-card">
-          <ImagePreview />
-        </section>
+          <TabsContent value="dashboard" className="space-y-6">
+            {/* KPI Row */}
+            <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {KPI_DATA.map((kpi) => (
+                <KPIWidget key={kpi.title} {...kpi} />
+              ))}
+            </section>
+            {/* Image Preview */}
+            <section className="kpi-card">
+              <ImagePreview />
+            </section>
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <AnalyticsTab />
+          </TabsContent>
+
+          <TabsContent value="floorplan">
+            <FloorPlanTab />
+          </TabsContent>
+        </Tabs>
       </main>
 
       {/* Footer */}
@@ -94,6 +115,9 @@ const Index = () => {
           <span>Compliant with KSA Data Protection Standards</span>
         </div>
       </footer>
+
+      {/* AI Chatbot */}
+      <AIChatbot />
     </div>
   );
 };
