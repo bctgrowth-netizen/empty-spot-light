@@ -57,7 +57,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-base font-display font-bold text-foreground leading-tight">
-                SpaceIQ
+                Warehouse Monitoring
               </h1>
               <p className="text-[11px] text-muted-foreground leading-tight">
                 AI-Powered Warehouse Intelligence
